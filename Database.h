@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <unistd.h>
+#include <iostream> // zy add
 
 #include "String.h"
 using namespace std;
@@ -173,7 +174,7 @@ namespace b2be
 				
 				//Other methods
 				string QuoteEscapeString(const string &aString);
-				
+	
 			private:
 				string _Host;
 				string _Username;

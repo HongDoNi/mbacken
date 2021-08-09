@@ -3,12 +3,13 @@
 
 ServiceImpl::ServiceImpl()
 {
-	
+	std::cout << "ServiceImpl" << std::endl;
 }
 
 
 ServiceImpl::~ServiceImpl()
 {
+	std::cout << "~ServiceImpl" << std::endl;
 	
 }
 
@@ -21,6 +22,7 @@ void ServiceImpl::Init()
 
 void ServiceImpl::Run()
 {
+	// std::cout << "flag" << std::endl;
 	RunProcessModel();
 }
 
@@ -29,32 +31,34 @@ void ServiceImpl::RunProcessModel()
 {
 	while (!_StopCalled)
 	{
-		
+		std::cout << "RunProcessModel" << std::endl;
 		b2be::utils::Database* database = GetLocalDatabase();
 				
 		unsigned long messageActionID = 0;
 		if(!PreProcessMessage(database))
 		{
-			continue;			
+			std::cout << "PreProcessMessage" << std::endl;
+			// continue;			
 		}
 		
 		database->BeginTransaction();
 		ProcessMessage(database);
+		_StopCalled = true;
 		
-		if(_IsError)
-		{
-			database->RollbackTransaction();
-			PostProcessMessage(database);
-			continue;
-		}		
+		// if(_IsError)
+		// {
+		// 	database->RollbackTransaction();
+		// 	PostProcessMessage(database);
+		// 	continue;
+		// }		
 	
-		database->CommitTransaction();		
+		// database->CommitTransaction();		
 
-		if (_Verbose)
-			VerboseLog("Data has been successfully stored.");				
+		// if (_Verbose)
+		// 	VerboseLog("Data has been successfully stored.");				
 	
-		if(!PostProcessMessage(database))
-			continue;				
+		// if(!PostProcessMessage(database))
+		// 	continue;				
 				
 	}
 }
@@ -81,34 +85,39 @@ bool ServiceImpl::PostProcessMessage(b2be::utils::Database* database)
 
 void ServiceImpl::ProcessMessage(b2be::utils::Database* database)
 {	
+	// string sqlstat = "INSERT INTO abc(name, age) values (\"john\", \"29\")";
+	string sqlstat = "SELECT * FROM abc";
+	std::cout << sqlstat << std::endl;
 
-//	string sqlstat = "INSERT INTO DeviceFaultInfo (DeviceFaultID, DeviceAssetID, DeviceType, DeviceCoreChipID, DeviceInstallAddr1, DeviceInstallAddr2, DeviceNoInGroup, DeviceFaultDate, DeviceFaultTime, DeviceProtocol, DeviceProtocolVersion) ";
-//	sqlstat.append("VALUES (\"");
-//	sqlstat.append(deviceFaultID);
-//	sqlstat.append("\", \"");
-//	sqlstat.append(deviceAssetID);
-//	sqlstat.append("\", \"");
-//	sqlstat.append(deviceType);
-//	sqlstat.append("\", \"");
-//	sqlstat.append(deviceCoreChipID);
-//	sqlstat.append("\", \"");
-//	sqlstat.append(DeviceInstallAddr1);
-//	sqlstat.append("\", \"");
-//	sqlstat.append(DeviceInstallAddr2);
-//	sqlstat.append("\", \"");
-//	sqlstat.append(DeviceNoInGroup);
-//	sqlstat.append("\", \"");
-//	sqlstat.append(DeviceFaultDate);
-//	sqlstat.append("\", \"");
-//	sqlstat.append(DeviceFaultTime);
-//	sqlstat.append("\", \"");
-//	sqlstat.append(DeviceProtocol);
-//	sqlstat.append("\", \"");
-//	sqlstat.append(DeviceProtocolVersion);
-//	sqlstat.append("\" )");
+
+	// string sqlstat = "INSERT INTO DeviceFaultInfo (DeviceFaultID, DeviceAssetID, DeviceType, DeviceCoreChipID, DeviceInstallAddr1, DeviceInstallAddr2, DeviceNoInGroup, DeviceFaultDate, DeviceFaultTime, DeviceProtocol, DeviceProtocolVersion) ";
+	// sqlstat.append("VALUES (\"");
+	// sqlstat.append(deviceFaultID);
+	// sqlstat.append("\", \"");
+	// sqlstat.append(deviceAssetID);
+	// sqlstat.append("\", \"");
+	// sqlstat.append(deviceType);
+	// sqlstat.append("\", \"");
+	// sqlstat.append(deviceCoreChipID);
+	// sqlstat.append("\", \"");
+	// sqlstat.append(DeviceInstallAddr1);
+	// sqlstat.append("\", \"");
+	// sqlstat.append(DeviceInstallAddr2);
+	// sqlstat.append("\", \"");
+	// sqlstat.append(DeviceNoInGroup);
+	// sqlstat.append("\", \"");
+	// sqlstat.append(DeviceFaultDate);
+	// sqlstat.append("\", \"");
+	// sqlstat.append(DeviceFaultTime);
+	// sqlstat.append("\", \"");
+	// sqlstat.append(DeviceProtocol);
+	// sqlstat.append("\", \"");
+	// sqlstat.append(DeviceProtocolVersion);
+	// sqlstat.append("\" )");
+	// std::cout << sqlstat << std::endl;
 //
-//    b2be::utils::DBQuery* query = database->CreateQuery(sqlstat);
-//    b2be::utils::DBQueryResult* result = query->Execute();
+   b2be::utils::DBQuery* query = database->CreateQuery(sqlstat);
+   b2be::utils::DBQueryResult* result = query->Execute();
 //
 //	if(query->IsError())
 //	{

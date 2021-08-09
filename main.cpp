@@ -137,17 +137,25 @@ int main (int argc, char** argv)
     // delete service;
 
 //    processLock->Release();
+    
+    service = new ServiceImpl();
+    ServiceBase* serviceb = service;
+    serviceb -> InitBase();
+    serviceb -> RunBase();
 
-    b2be::utils::DBSettings mydbs("localhost", "root", "admin", 3306, false);
-    const string mydbname("test");
-    serviceb = new b2be::utils::Database(&mydbs, mydbname);
-    serviceb -> Connect();
-    if ( serviceb->IsError() ) {
-        std::cout << "fail" << std::endl;
-    }
-    else {
-        std::cout << "success" << std::endl;
-    }
+    // delete serviceb;
+    delete service;
+
+    // b2be::utils::DBSettings mydbs("localhost", "root", "admin", 3306, false);
+    // const string mydbname("test");
+    // serviceb = new b2be::utils::Database(&mydbs, mydbname);
+    // serviceb -> Connect();
+    // if ( serviceb->IsError() ) {
+    //     std::cout << "fail" << std::endl;
+    // }
+    // else {
+    //     std::cout << "success" << std::endl;
+    // }
 
 
     cout << "Service Shutdown Complete (" << executableName  << ")" << endl;

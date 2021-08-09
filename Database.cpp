@@ -403,21 +403,32 @@ DBQuery::~DBQuery()
  */
 DBQueryResult* DBQuery::Execute()
 {
-	delete _Query;
+	if(!_Query) delete _Query;
 		
 	_Query = new mysqlpp::Query(_Connection, false, _SqlStatement.c_str());
-	
+	std::cout << _SqlStatement << std::endl;
+	// _Query = _Connection -> query("select * from abc");
+	printf("flag1\n");
 	mysqlpp::StoreQueryResult storeQueryResult = _Query->store();
+	mysqlpp::StoreQueryResult* pSQR = &storeQueryResult;
+	std::cout << storeQueryResult << std::endl;
+	printf("flag2\n");
 	if(!storeQueryResult)
 	{
 		_IsError = true;
 		_ErrorMessage = "Failed to execute query (";
+		printf("flag2.1\n");
 		_ErrorMessage.append(_Query->error());
+		printf("flag2.2\n");
 		_ErrorMessage.append(")");
+		printf("flag2.3\n");
 		return NULL;
 	}
+	printf("flag3\n");
 
+	// DBQueryResult* result = new DBQueryResult(pSQR);
 	DBQueryResult* result = new DBQueryResult(new mysqlpp::StoreQueryResult(storeQueryResult));
+	printf("flag4\n");
 	return result;
 }
 
@@ -565,7 +576,7 @@ void DBNonQuery::ResetError()
  */
 DBQueryResult::DBQueryResult(mysqlpp::StoreQueryResult* result)
 {
-	_Result = result;
+	// _Result = result;
 	_CurrentRow = -1;
 	
 	_IsError = false;
@@ -573,7 +584,7 @@ DBQueryResult::DBQueryResult(mysqlpp::StoreQueryResult* result)
 }
  
 /**
- * Destuctor
+ * Destructor
  */
 DBQueryResult::~DBQueryResult()
 {

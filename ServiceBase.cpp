@@ -1,9 +1,11 @@
 #include "ServiceBase.h"
 #include "Database.h"
+#include <iostream>
 
 
 ServiceBase::ServiceBase()
 {
+	std::cout << "ServiceBase" << std::endl;
 	_StopCalled = false;
 	_Verbose = false;
 	ResetError();
@@ -13,10 +15,9 @@ ServiceBase::ServiceBase()
  
 ServiceBase:: ~ ServiceBase()
 {
-	
-	_database->Disconnect();
-	delete _database;
-	
+	std::cout << "~ServiceBase" << std::endl;
+	if(_database != NULL) _database->Disconnect();
+	if(_database != NULL) delete _database;
 }
 
 
@@ -60,6 +61,9 @@ bool ServiceBase::ConnectDatabase()
 	{
 		RaiseSystemError("Unable to connect to database at " + _database->GetHost() + " : " + _database->GetErrorMessage());
 		return false;
+	}
+	else {
+		std::cout << "Connected!" << std::endl;
 	}
 
 	return true;	

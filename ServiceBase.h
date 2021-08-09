@@ -40,7 +40,7 @@ class ServiceBase
 		void ToggleVerbose();
 		
 //		Settings* GetSettings();
-        b2be::utils::DBSettings* GetSettings();
+        b2be::utils::DBSettings* GetSettings(); // undefined function
 
 
     bool IsError() const;
