@@ -1,6 +1,5 @@
 #include "ServiceBase.h"
 #include "Database.h"
-#include <iostream>
 
 
 ServiceBase::ServiceBase()

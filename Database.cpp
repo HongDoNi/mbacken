@@ -62,9 +62,9 @@ Database::Database(const string &host, const string &username, const string &pas
  */
 Database::~Database()
 {
-	delete _Connection;
-	delete _Transaction;	
-	delete _QuoteEscapeQuery;
+	if(_Connection != NULL) delete _Connection;
+	if(_Transaction != NULL) delete _Transaction;	
+	if(_QuoteEscapeQuery != NULL) delete _QuoteEscapeQuery;
 }
 
 /**
@@ -406,29 +406,35 @@ DBQueryResult* DBQuery::Execute()
 	if(!_Query) delete _Query;
 		
 	_Query = new mysqlpp::Query(_Connection, false, _SqlStatement.c_str());
-	std::cout << _SqlStatement << std::endl;
-	// _Query = _Connection -> query("select * from abc");
-	printf("flag1\n");
 	mysqlpp::StoreQueryResult storeQueryResult = _Query->store();
-	mysqlpp::StoreQueryResult* pSQR = &storeQueryResult;
-	std::cout << storeQueryResult << std::endl;
-	printf("flag2\n");
+	
 	if(!storeQueryResult)
 	{
 		_IsError = true;
 		_ErrorMessage = "Failed to execute query (";
-		printf("flag2.1\n");
 		_ErrorMessage.append(_Query->error());
-		printf("flag2.2\n");
 		_ErrorMessage.append(")");
-		printf("flag2.3\n");
 		return NULL;
 	}
-	printf("flag3\n");
 
-	// DBQueryResult* result = new DBQueryResult(pSQR);
+	if (storeQueryResult) {
+            std::cout.setf(std::ios::left);
+            std::cout <<
+            std::setw(31) << "name" <<
+            std::setw(10) << "age" <<
+            std::endl;
+
+            mysqlpp::StoreQueryResult::const_iterator it;
+
+            for (it = storeQueryResult.begin(); it != storeQueryResult.end(); ++it) {
+                mysqlpp::Row row = *it;
+                std::cout <<
+                std::setw(31) << row[0] <<
+                std::setw(10) << row[1] <<
+                std::endl;
+            }
+    }
 	DBQueryResult* result = new DBQueryResult(new mysqlpp::StoreQueryResult(storeQueryResult));
-	printf("flag4\n");
 	return result;
 }
 
@@ -588,7 +594,11 @@ DBQueryResult::DBQueryResult(mysqlpp::StoreQueryResult* result)
  */
 DBQueryResult::~DBQueryResult()
 {
-	delete _Result;
+	if(_Result != NULL) {
+		std::cout << "~DBQueryResult" << std::endl;
+		delete _Result;
+	}
+	else std::cout << "_Result is NULL" << std::endl;
 }
 
 /**

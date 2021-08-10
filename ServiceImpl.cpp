@@ -16,7 +16,7 @@ ServiceImpl::~ServiceImpl()
 
 void ServiceImpl::Init()
 {
-	// To Do
+	InitBase();
 }
 
 
@@ -41,8 +41,9 @@ void ServiceImpl::RunProcessModel()
 			// continue;			
 		}
 		
-		database->BeginTransaction();
+		database -> BeginTransaction();
 		ProcessMessage(database);
+		database -> CommitTransaction();
 		_StopCalled = true;
 		
 		// if(_IsError)
@@ -61,12 +62,13 @@ void ServiceImpl::RunProcessModel()
 		// 	continue;				
 				
 	}
+
 }
 
 
 void ServiceImpl::Stop()
 {
-	
+	_StopCalled = true;  // zy add 	
 }
 
 //void ServiceImpl::PreProcessMessage(b2be::utils::Database* database)
@@ -85,8 +87,8 @@ bool ServiceImpl::PostProcessMessage(b2be::utils::Database* database)
 
 void ServiceImpl::ProcessMessage(b2be::utils::Database* database)
 {	
-	// string sqlstat = "INSERT INTO abc(name, age) values (\"john\", \"29\")";
-	string sqlstat = "SELECT * FROM abc";
+	string sqlstat = "INSERT INTO abc(name, age) values (\"john\", \"29\")";
+	// string sqlstat = "SELECT * FROM abc";
 	std::cout << sqlstat << std::endl;
 
 
@@ -118,6 +120,22 @@ void ServiceImpl::ProcessMessage(b2be::utils::Database* database)
 //
    b2be::utils::DBQuery* query = database->CreateQuery(sqlstat);
    b2be::utils::DBQueryResult* result = query->Execute();
+
+	sqlstat = "SELECT * FROM abc";
+	std::cout << sqlstat << std::endl;
+
+	query = database->CreateQuery(sqlstat);
+	result = query->Execute();
+
+	sqlstat = "delete from abc where name='john'";
+
+	std::cout << sqlstat << std::endl;
+
+	query = database->CreateQuery(sqlstat);
+	query->Execute();
+
+
+
 //
 //	if(query->IsError())
 //	{
@@ -128,10 +146,10 @@ void ServiceImpl::ProcessMessage(b2be::utils::Database* database)
 //			delete result;
 //	}
 //
-//	delete result;
-//	delete query;
-//	result = NULL;
-//	query  = NULL;
+	// delete result;
+	// delete query;
+	result = NULL;
+	query  = NULL;
 //
 //	sqlstat = "INSERT INTO DeviceFaultProcess (DeviceFaultInfoID, DeviceFaultCause, DeviceFaultProcess, DeviceFaultProcessDate, ReportToSupllier, SupplierFeedback) ";
 //	sqlstat.append("VALUES (\"");

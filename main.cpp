@@ -139,12 +139,17 @@ int main (int argc, char** argv)
 //    processLock->Release();
     
     service = new ServiceImpl();
-    ServiceBase* serviceb = service;
-    serviceb -> InitBase();
-    serviceb -> RunBase();
+    // ServiceBase* serviceb = service;
+    // serviceb -> InitBase();
+    // serviceb -> RunBase();
+    service -> Init();
+    service -> Run();
+    // service -> Stop();
 
     // delete serviceb;
-    delete service;
+    // delete service;
+    // delete serviceb;
+    
 
     // b2be::utils::DBSettings mydbs("localhost", "root", "admin", 3306, false);
     // const string mydbname("test");
