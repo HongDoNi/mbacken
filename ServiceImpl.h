@@ -85,8 +85,6 @@ class ServiceImpl : public ServiceBase
 		void RunProcessModel();
 			
 		void ProcessMessage(b2be::utils::Database* database);
-//		void PostProcessMessage(b2be::utils::Database* database);
-//		void PreProcessMessage(b2be::utils::Database* database);
         bool PostProcessMessage(b2be::utils::Database* database);
         bool PreProcessMessage(b2be::utils::Database* database);
 

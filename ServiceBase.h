@@ -43,7 +43,7 @@ class ServiceBase
         b2be::utils::DBSettings* GetSettings(); // undefined function
 
 
-    bool IsError() const;
+    	bool IsError() const;
 		ErrorType GetErrorType() const;
 		string GetInitErrorMessage() const;
 		virtual void ResetError();

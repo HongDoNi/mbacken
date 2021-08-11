@@ -15,8 +15,11 @@ ServiceBase::ServiceBase()
 ServiceBase:: ~ ServiceBase()
 {
 	std::cout << "~ServiceBase" << std::endl;
-	if(_database != NULL) _database->Disconnect();
-	if(_database != NULL) delete _database;
+	if(_database != NULL) {
+		std::cout << "disconnect and del _database" << std::endl;
+		_database->Disconnect();
+		delete _database;
+	}
 }
 
 

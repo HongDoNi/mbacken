@@ -13,7 +13,7 @@
 #include "ServiceImpl.h" //this is the actual source for the service we are compiling. Using "-I/service/source/path" will ensure the .h file will be found
 
 ServiceImpl* service = NULL;
-b2be::utils::Database* serviceb = NULL;
+// b2be::utils::Database* serviceb = NULL;
 
 void Usage(string executableName)
 {
@@ -147,7 +147,7 @@ int main (int argc, char** argv)
     // service -> Stop();
 
     // delete serviceb;
-    // delete service;
+    delete service;
     // delete serviceb;
     
 

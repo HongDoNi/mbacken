@@ -10,7 +10,6 @@ ServiceImpl::ServiceImpl()
 ServiceImpl::~ServiceImpl()
 {
 	std::cout << "~ServiceImpl" << std::endl;
-	
 }
 
 

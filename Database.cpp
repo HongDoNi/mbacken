@@ -62,9 +62,20 @@ Database::Database(const string &host, const string &username, const string &pas
  */
 Database::~Database()
 {
-	if(_Connection != NULL) delete _Connection;
-	if(_Transaction != NULL) delete _Transaction;	
-	if(_QuoteEscapeQuery != NULL) delete _QuoteEscapeQuery;
+	if(_Connection != NULL) {
+		std::cout << "del _Connection" << std::endl;
+		delete _Connection;
+	}
+	
+	if(_Transaction != NULL) {
+		std::cout << "del _Transaction" << std::endl;
+		delete _Transaction;	
+	}
+	
+	if(_QuoteEscapeQuery != NULL) {
+		std::cout << "del _QuoteEscapeQuery" << std::endl;
+		delete _QuoteEscapeQuery;
+	} 
 }
 
 /**
