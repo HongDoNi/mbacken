@@ -1,10 +1,13 @@
-OBJs = main.o ServiceImpl.o ServiceBase.o Logger.o Database.o File.o String.o DateTime.o
+OBJs = main.o TestData.o ServiceImpl.o ServiceBase.o Logger.o Database.o File.o String.o DateTime.o
 
 all : $(OBJs)
 	g++ -g -o main $(OBJs) -I/usr/include/mysql -I/usr/local/include/mysql++ -L/usr/local/lib -lmysqlpp
 
 main.o: main.cpp
 	g++ -c main.cpp -I/usr/include/mysql -I/usr/local/include/mysql++
+
+TestData.o : TestData.h TestData.cpp
+	g++ -c TestData.cpp
 
 ServiceImpl.o : ServiceImpl.h ServiceImpl.cpp
 	g++ -c ServiceImpl.cpp -I/usr/include/mysql -I/usr/local/include/mysql++
