@@ -1,34 +1,35 @@
-OBJs = main.o TestData.o ServiceImpl.o ServiceBase.o Logger.o Database.o File.o String.o DateTime.o
+OBJs = app/link_obj/ServiceMain.o app/link_obj/TestData.o app/link_obj/ServiceImpl.o app/link_obj/ServiceBase.o \
+	app/link_obj/Logger.o app/link_obj/Database.o app/link_obj/File.o app/link_obj/String.o app/link_obj/DateTime.o
 
 all : $(OBJs)
-	g++ -g -o main $(OBJs) -I/usr/include/mysql -I/usr/local/include/mysql++ -L/usr/local/lib -lmysqlpp
+	g++ -g -o ServiceMain $(OBJs) -I/usr/include/mysql -I/usr/local/include/mysql++ -L/usr/local/lib -lmysqlpp
 
-main.o: main.cpp
-	g++ -c main.cpp -I/usr/include/mysql -I/usr/local/include/mysql++
+app/link_obj/ServiceMain.o: app/ServiceMain.cpp
+	g++ -o $@ -c app/ServiceMain.cpp -I/usr/include/mysql -I/usr/local/include/mysql++ -I_include/
 
-TestData.o : TestData.h TestData.cpp
-	g++ -c TestData.cpp
+app/link_obj/TestData.o : _include/TestData.h app/TestData.cpp
+	g++ -o $@ -c app/TestData.cpp -I_include/
 
-ServiceImpl.o : ServiceImpl.h ServiceImpl.cpp
-	g++ -c ServiceImpl.cpp -I/usr/include/mysql -I/usr/local/include/mysql++
+app/link_obj/ServiceImpl.o : _include/ServiceImpl.h app/ServiceImpl.cpp
+	g++ -o $@ -c app/ServiceImpl.cpp -I/usr/include/mysql -I/usr/local/include/mysql++ -I_include/
 
-ServiceBase.o : ServiceBase.h ServiceBase.cpp
-	g++ -c ServiceBase.cpp -I/usr/include/mysql -I/usr/local/include/mysql++
+app/link_obj/ServiceBase.o : _include/ServiceBase.h app/ServiceBase.cpp
+	g++ -o $@ -c app/ServiceBase.cpp -I/usr/include/mysql -I/usr/local/include/mysql++ -I_include/
 
-Logger.o : Logger.h Logger.cpp
-	g++ -c Logger.cpp -I/usr/include/mysql -I/usr/local/include/mysql++
+app/link_obj/Logger.o : _include/Logger.h app/Logger.cpp
+	g++ -o $@ -c app/Logger.cpp -I/usr/include/mysql -I/usr/local/include/mysql++ -I_include/
 
-Database.o : Database.h Database.cpp
-	g++ -c Database.cpp -I/usr/include/mysql -I/usr/local/include/mysql++
+app/link_obj/Database.o : _include/Database.h utils/Database.cpp
+	g++ -o $@ -c utils/Database.cpp -I/usr/include/mysql -I/usr/local/include/mysql++ -I_include/
 
-File.o : File.h File.cpp
-	g++ -c File.cpp
+app/link_obj/File.o : _include/File.h utils/File.cpp
+	g++ -o $@ -c utils/File.cpp -I_include/
 
-String.o : String.h String.cpp
-	g++ -c String.cpp
+app/link_obj/String.o : _include/String.h utils/String.cpp
+	g++ -o $@ -c utils/String.cpp -I_include/
 
-DateTime.o :DateTime.h DateTime.cpp
-	g++ -c DateTime.cpp
+app/link_obj/DateTime.o :_include/DateTime.h utils/DateTime.cpp
+	g++ -o $@ -c utils/DateTime.cpp -I_include/
 
 clean :
-	rm *.o main
+	rm app/link_obj/* | rm ServiceMain
