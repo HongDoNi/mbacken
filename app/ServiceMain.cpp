@@ -12,7 +12,7 @@
 //#include "phoenix/ServiceInstance.h"
 
 #include "ServiceImpl.h" //this is the actual source for the service we are compiling. Using "-I/service/source/path" will ensure the .h file will be found
-
+#include "TestData.h"
 
 ServiceImpl* service = NULL;
 // b2be::utils::Database* serviceb = NULL;
@@ -98,6 +98,9 @@ int main (int argc, char** argv)
 
 
     export_data_to_test_table();
+    // for(auto i : mysqlstrs) {
+    //     std::cout << i << std::endl;
+    // }
     
 
     //create service instance object
